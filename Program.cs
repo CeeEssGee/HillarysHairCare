@@ -45,5 +45,19 @@ app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
     return db.Stylists.ToList();
 });
 
+// SERVICE ENDPOINTS
+app.MapGet("api/services", (HillarysHairCareDbContext db) =>
+{
+    return db.Services.ToList();
+});
+
+// APPOINTMENT ENDPOINTS
+app.MapGet("api/appointments", (HillarysHairCareDbContext db) =>
+{
+    return db.Appointments
+        .Include(s => s.Stylist)
+        .Include(c => c.Customer)
+        .Include(s => s.Service)
+});
 
 app.Run();
