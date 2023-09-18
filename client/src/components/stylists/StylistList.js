@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Spinner, Table } from "reactstrap";
-import { getStylists } from "../../data/stylistData";
+import { activateStylist, deactivateStylist, getStylists } from "../../data/stylistData";
 import StylistAdd from "./StylistAdd";
 
 export default function StylistList() {
@@ -16,10 +16,14 @@ export default function StylistList() {
 
     const handleActivate = (e) => {
         e.preventDefault()
+        activateStylist(e.target.value)
+        getAllStylists()
     }
 
     const handleDeactivate = (e) => {
         e.preventDefault()
+        deactivateStylist(e.target.value)
+        getAllStylists()
     }
 
     if (stylists.length === 0) {

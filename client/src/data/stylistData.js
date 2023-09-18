@@ -13,3 +13,23 @@ export const addStylist = (stylist) => {
         body: JSON.stringify(stylist),
     }).then((res) => res.json());
 };
+
+// deactivate stylist
+export const deactivateStylist = (id) => {
+    return fetch(`${_apiUrl}/deactivate/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+};
+
+// activate stylist
+export const activateStylist = (id) => {
+    return fetch(`${_apiUrl}/activate/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
+};
