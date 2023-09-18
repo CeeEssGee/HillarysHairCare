@@ -13,11 +13,24 @@ root.render(
     <Routes>
       <Route path="/" element={<App />}>
         <Route path="appointments">
+          <Route index element={<p>Appointment List</p>} />
+          <Route path=":id" element={<p>Appointment Details</p>} />
+        </Route>
+        <Route path="services">
+          <Route index element={<p>Services List</p>} />
+          <Route path=':id' element={<p>Service Details</p>} />
+        </Route>
+        <Route path="stylists">
+          <Route index element={<p>Stylist List</p>} />
+          <Route path=':id' element={<p>Stylist Details</p>} />
+        </Route>
+        <Route path="customers">
           <Route index element={<CustomerList />} />
+          <Route path=':id' element={<p>Customer Details</p>} />
         </Route>
       </Route>
     </Routes>
-  </BrowserRouter>
+  </BrowserRouter>,
 );
 
 // If you want to start measuring performance in your app, pass a function
