@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CustomerList from './components/CustomerList';
+import StylistList from './components/stylists/StylistList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,7 +22,7 @@ root.render(
           <Route path=':id' element={<p>Service Details</p>} />
         </Route>
         <Route path="stylists">
-          <Route index element={<p>Stylist List</p>} />
+          <Route index element={<StylistList />} />
           <Route path=':id' element={<p>Stylist Details</p>} />
         </Route>
         <Route path="customers">
