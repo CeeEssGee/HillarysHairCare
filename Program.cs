@@ -34,9 +34,28 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // CUSTOMER ENDPOINTS
+
+// Get all customers
 app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
 {
     return db.Customers.ToList();
+});
+
+// Get one customer's details
+app.MapGet("/api/customers/{id}", (HillarysHairCareDbContext db, int id) =>
+{
+    return Results.Ok(db.Customers
+    .Include(c => c.Appointments)
+    .ThenInclude(a => a.Services)
+    );
+});
+
+// Create a new customer
+app.MapPost("/api/customers", (HillarysHairCareDbContext db, Customer customer) =>
+{
+    db.Customers.Add(customer);
+    db.SaveChanges();
+    return Results.Created($"/api/customers/{customer.Id}", customer);
 });
 
 // STYLIST ENDPOINTS
@@ -55,9 +74,10 @@ app.MapGet("api/services", (HillarysHairCareDbContext db) =>
 app.MapGet("api/appointments", (HillarysHairCareDbContext db) =>
 {
     return db.Appointments
-        .Include(s => s.Stylist)
-        .Include(c => c.Customer)
-        .Include(s => s.Services);
+        .Include(a => a.Stylist)
+        .Include(a => a.Customer)
+        .Include(a => a.Services)
+        .OrderBy(a => a.AppointmentTime);
 });
 
 app.Run();
