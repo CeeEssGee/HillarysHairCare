@@ -47,7 +47,7 @@ export default function AppointmentList() {
                             <td>{a?.appointmentTime}</td>
                             <td>{a?.customer?.name}</td>
                             <td>{a?.stylist?.name}</td>
-                            <td><Button>View Servies</Button></td>
+                            <td><Button>View Services</Button></td>
                             <td>${a?.totalCost}</td>
                             <td>{a?.isCancelled.toString()}</td>
                             <td>

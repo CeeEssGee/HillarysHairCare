@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getCustomers } from "../../data/customerData";
 import { Button, Spinner, Table } from "reactstrap";
+import CustomerAdd from "./CustomerAdd";
 
 export default function CustomerList() {
     const [customers, setCustomers] = useState([]);
@@ -13,6 +14,12 @@ export default function CustomerList() {
         getCustomers().then(setCustomers)
     };
 
+    const handleAdd = (e) => {
+        e.preventDefault()
+
+
+    }
+
     if (customers.length === 0) {
         return <Spinner />
     }
@@ -21,6 +28,7 @@ export default function CustomerList() {
         <div className="container">
             <div className="sub-menu bg-light">
                 <h4>Customers</h4>
+                <CustomerAdd getAllCustomers={getAllCustomers} />
             </div>
             <Table>
                 <thead>
