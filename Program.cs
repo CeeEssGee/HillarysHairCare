@@ -38,7 +38,8 @@ app.UseHttpsRedirection();
 // Get all customers
 app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
 {
-    return db.Customers.ToList();
+    return db.Customers.ToList()
+    .OrderBy(c => c.Id);
 });
 
 // Get one customer's details
@@ -63,7 +64,8 @@ app.MapPost("/api/customers", (HillarysHairCareDbContext db, Customer customer) 
 // Get all stylists
 app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
 {
-    return db.Stylists.ToList();
+    return db.Stylists.ToList()
+    .OrderBy(s => s.Id);
 });
 
 // Get one stylist's details
@@ -84,10 +86,39 @@ app.MapPost("/api/stylists", (HillarysHairCareDbContext db, Stylist stylist) =>
     return Results.Created($"/api/stylists/{stylist.Id}", stylist);
 });
 
+// deactivate a stylist
+app.MapPut("/api/stylists/deactivate/{id}", (HillarysHairCareDbContext db, int id) =>
+{
+    Stylist stylistToUpdate = db.Stylists.SingleOrDefault(stylist => stylist.Id == id);
+    if (stylistToUpdate == null)
+    {
+        return Results.NotFound();
+    }
+    stylistToUpdate.isActive = false;
+
+    db.SaveChanges();
+    return Results.NoContent();
+});
+
+// activate a stylist
+app.MapPut("/api/stylists/activate/{id}", (HillarysHairCareDbContext db, int id) =>
+{
+    Stylist stylistToUpdate = db.Stylists.SingleOrDefault(stylist => stylist.Id == id);
+    if (stylistToUpdate == null)
+    {
+        return Results.NotFound();
+    }
+    stylistToUpdate.isActive = true;
+
+    db.SaveChanges();
+    return Results.NoContent();
+});
+
 // SERVICE ENDPOINTS
 app.MapGet("api/services", (HillarysHairCareDbContext db) =>
 {
-    return db.Services.ToList();
+    return db.Services.ToList()
+    .OrderBy(s => s.Id);
 });
 
 // APPOINTMENT ENDPOINTS
