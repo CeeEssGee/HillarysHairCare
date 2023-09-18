@@ -11,5 +11,17 @@ public class Appointment
     public Stylist Stylist { get; set; }
     public Customer Customer { get; set; }
     public List<Service> Services { get; set; }
-
+    public bool isCancelled { get; set; }
+    public decimal TotalCost
+    {
+        get
+        {
+            decimal cost = 0;
+            foreach (Service service in Services)
+            {
+                cost += service.Price;
+            }
+            return cost;
+        }
+    }
 }

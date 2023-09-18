@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCustomers } from "../data/customerData";
+import { getCustomers } from "../../data/customerData";
 import { Button, Spinner, Table } from "reactstrap";
 
 export default function CustomerList() {
