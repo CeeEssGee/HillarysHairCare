@@ -52,13 +52,23 @@ export default function AppointmentList() {
                             <td><Button>View Services</Button></td>
                             <td>${a?.totalCost}</td>
                             <td>{a?.isCancelled.toString()}</td>
-                            <td>
-                                <Button
-                                    color='danger'
-                                    value={a.id}
-                                    onClick={handleCancel}
-                                >Cancel</Button>
-                            </td>
+
+                            {a.isCancelled ? (
+                                <td>
+
+                                </td>
+                            ) : (
+                                <td>
+                                    <Button
+                                        color='danger'
+                                        value={a.id}
+                                        onClick={handleCancel}
+                                    >Cancel</Button>
+                                </td>
+                            )
+
+                            }
+
                         </tr>
                     ))}
                 </tbody>
