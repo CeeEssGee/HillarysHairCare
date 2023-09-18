@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CustomerList from './components/customers/CustomerList';
 import StylistList from './components/stylists/StylistList';
 import ServiceList from './components/services/ServiceList';
+import AppointmentList from './components/appointments/AppointmentList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +16,7 @@ root.render(
     <Routes>
       <Route path="/" element={<App />}>
         <Route path="appointments">
-          <Route index element={<p>Appointment List</p>} />
+          <Route index element={<AppointmentList />} />
           <Route path=":id" element={<p>Appointment Details</p>} />
         </Route>
         <Route path="services">
