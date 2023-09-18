@@ -33,4 +33,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// CUSTOMER ENDPOINTS
+app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
+{
+    return db.Customers.ToList();
+
+});
+
 app.Run();

@@ -11,4 +11,5 @@ public class Customer
     public string Email { get; set; }
     [Required]
     public string PhoneNumber { get; set; }
+    public List<Appointment> Appointments { get; set; }
 }
