@@ -115,20 +115,38 @@ app.MapPut("/api/stylists/activate/{id}", (HillarysHairCareDbContext db, int id)
 });
 
 // SERVICE ENDPOINTS
-app.MapGet("api/services", (HillarysHairCareDbContext db) =>
+
+// get all services
+app.MapGet("/api/services", (HillarysHairCareDbContext db) =>
 {
     return db.Services.ToList()
     .OrderBy(s => s.Id);
 });
 
 // APPOINTMENT ENDPOINTS
-app.MapGet("api/appointments", (HillarysHairCareDbContext db) =>
+
+// get all appointments
+app.MapGet("/api/appointments", (HillarysHairCareDbContext db) =>
 {
     return db.Appointments
         .Include(a => a.Stylist)
         .Include(a => a.Customer)
         .Include(a => a.Services)
         .OrderBy(a => a.AppointmentTime);
+});
+
+// cancel an appointment
+app.MapPut("/api/appointments/cancel/{id}", (HillarysHairCareDbContext db, int id) =>
+{
+    Appointment appointmentToCancel = db.Appointments.SingleOrDefault(appointment => appointment.Id == id);
+    if (appointmentToCancel == null)
+    {
+        return Results.NotFound();
+    }
+    appointmentToCancel.isCancelled = true;
+
+    db.SaveChanges();
+    return Results.NoContent();
 });
 
 app.Run();

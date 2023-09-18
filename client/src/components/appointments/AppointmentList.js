@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Spinner, Table } from "reactstrap";
-import { getAppointments } from "../../data/appointmentData";
+import { cancelAppointment, getAppointments } from "../../data/appointmentData";
 
 
 export default function AppointmentList() {
@@ -16,6 +16,8 @@ export default function AppointmentList() {
 
     const handleCancel = (e) => {
         e.preventDefault();
+        cancelAppointment(e.target.value)
+        getAllAppointments()
     }
 
     if (appointments.length === 0) {
