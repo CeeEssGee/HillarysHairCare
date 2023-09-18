@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCustomers } from "../data/customerData";
-import { Button, Table } from "reactstrap";
+import { Button, Spinner, Table } from "reactstrap";
 
 export default function CustomerList() {
     const [customers, setCustomers] = useState([]);
@@ -12,6 +12,10 @@ export default function CustomerList() {
     const getAllCustomers = () => {
         getCustomers().then(setCustomers)
     };
+
+    if (customers.length === 0) {
+        return <Spinner />
+    }
 
     return (
         <div className="container">

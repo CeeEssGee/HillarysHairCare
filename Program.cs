@@ -37,7 +37,13 @@ app.UseHttpsRedirection();
 app.MapGet("/api/customers", (HillarysHairCareDbContext db) =>
 {
     return db.Customers.ToList();
-
 });
+
+// STYLIST ENDPOINTS
+app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
+{
+    return db.Stylists.ToList();
+});
+
 
 app.Run();
