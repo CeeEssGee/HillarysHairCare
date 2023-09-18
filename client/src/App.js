@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, NavItem, NavLink, Navbar, NavbarBrand } from "reactstrap";
+import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
@@ -13,16 +14,17 @@ function App() {
             <NavLink href='/appointments'>Appointments</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href='/Services'>Services</NavLink>
+            <NavLink href='/services'>Services</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href='/Stylists'>Stylists</NavLink>
+            <NavLink href='/stylists'>Stylists</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href='/Customers'>Customers</NavLink>
+            <NavLink href='/customers'>Customers</NavLink>
           </NavItem>
         </Nav>
       </Navbar>
+      <Outlet />
     </>
   );
 }
