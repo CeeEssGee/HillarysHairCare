@@ -59,9 +59,29 @@ app.MapPost("/api/customers", (HillarysHairCareDbContext db, Customer customer) 
 });
 
 // STYLIST ENDPOINTS
+
+// Get all stylists
 app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
 {
     return db.Stylists.ToList();
+});
+
+// Get one stylist's details
+app.MapGet("/api/stylists/{id}", (HillarysHairCareDbContext db, int id) =>
+{
+    return Results.Ok(db.Stylists
+    .Include(s => s.Appointments)
+    .ThenInclude(a => a.Customer)
+    );
+});
+
+// create new stylist
+app.MapPost("/api/stylists", (HillarysHairCareDbContext db, Stylist stylist) =>
+{
+
+    db.Stylists.Add(stylist);
+    db.SaveChanges();
+    return Results.Created($"/api/stylists/{stylist.Id}", stylist);
 });
 
 // SERVICE ENDPOINTS

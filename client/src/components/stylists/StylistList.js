@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Spinner, Table } from "reactstrap";
 import { getStylists } from "../../data/stylistData";
+import StylistAdd from "./StylistAdd";
 
 export default function StylistList() {
     const [stylists, setStylists] = useState([]);
@@ -29,6 +30,7 @@ export default function StylistList() {
         <div className="container">
             <div className="sub-menu bg-light">
                 <h4>Stylists</h4>
+                <StylistAdd getAllStylists={getAllStylists} />
             </div>
             <Table>
                 <thead>
