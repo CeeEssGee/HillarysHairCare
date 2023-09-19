@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Spinner, Table } from "reactstrap";
 import { cancelAppointment, getAppointments } from "../../data/appointmentData";
+import AppointmentAdd from "./AppointmentAdd";
 
 
 export default function AppointmentList() {
@@ -20,6 +21,8 @@ export default function AppointmentList() {
         getAllAppointments()
     }
 
+
+
     if (appointments.length === 0) {
         return <Spinner />
     }
@@ -28,6 +31,7 @@ export default function AppointmentList() {
         <div className="container">
             <div className="sub-menu bg-light">
                 <h4>Appointments</h4>
+                <AppointmentAdd getAllAppointments={getAllAppointments} />
             </div>
             <Table>
                 <thead>
@@ -49,7 +53,7 @@ export default function AppointmentList() {
                             <td>{a?.appointmentTime}</td>
                             <td>{a?.customer?.name}</td>
                             <td>{a?.stylist?.name}</td>
-                            <td><Button>View Services</Button></td>
+                            <td><Button>View/Edit Services</Button></td>
                             <td>${a?.totalCost}</td>
                             <td>{a?.isCancelled.toString()}</td>
 
