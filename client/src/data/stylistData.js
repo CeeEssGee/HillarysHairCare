@@ -5,6 +5,11 @@ export const getStylists = () => {
     return fetch(_apiUrl).then((r) => r.json());
 };
 
+// get active stylists
+export const getActiveStylists = () => {
+    return fetch(`${_apiUrl}/active`).then((r) => r.json());
+};
+
 // add a stylist
 export const addStylist = (stylist) => {
     return fetch(_apiUrl, {

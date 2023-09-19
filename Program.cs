@@ -68,6 +68,17 @@ app.MapGet("/api/stylists", (HillarysHairCareDbContext db) =>
     .OrderBy(s => s.Id);
 });
 
+// show active stylists
+// app.MapGet("/api/stylists/active", (HillarysHairCareDbContext db) =>
+// {
+//     var activeStylists = db.Stylists
+//     .Where(s => s.isActive == true).ToList();
+// });
+app.MapGet("/api/stylists/active", (HillarysHairCareDbContext db) =>
+{
+    return Results.Ok(db.Stylists.Where(s => s.isActive == true).ToList());
+});
+
 // Get one stylist's details
 app.MapGet("/api/stylists/{id}", (HillarysHairCareDbContext db, int id) =>
 {
@@ -133,6 +144,15 @@ app.MapGet("/api/appointments", (HillarysHairCareDbContext db) =>
         .Include(a => a.Customer)
         .Include(a => a.Services)
         .OrderBy(a => a.AppointmentTime);
+});
+
+// add an appointment 
+app.MapPost("/api/appointments", (HillarysHairCareDbContext db, Appointment appointment) =>
+{
+
+    db.Appointments.Add(appointment);
+    db.SaveChanges();
+    return Results.Created($"/api/appointments/{appointment.Id}", appointment);
 });
 
 // cancel an appointment

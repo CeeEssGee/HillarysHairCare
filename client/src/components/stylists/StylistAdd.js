@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, InputGroup, InputGroupText, Input } from 'reactstrap';
-import { addCustomer } from '../../data/customerData';
 import { addStylist } from '../../data/stylistData';
 
 function StylistAdd({ getAllStylists }) {
     const [modal, setModal] = useState(false);
     const [stylistName, setStylistName] = useState("");
-    const [stylistIsActive, setStylistIsActive] = useState(true);
+    // const [stylistIsActive, setStylistIsActive] = useState(true);
 
     const toggle = () => setModal(!modal);
 
