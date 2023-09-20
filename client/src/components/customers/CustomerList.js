@@ -37,8 +37,8 @@ export default function CustomerList() {
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
-                        <th>Schedule</th>
-                        <th>Edit</th>
+                        {/* <th>Schedule</th> */}
+                        {/* <th>Edit</th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -48,14 +48,14 @@ export default function CustomerList() {
                             <td>{c?.name}</td>
                             <td>{c?.email}</td>
                             <td>{c?.phoneNumber}</td>
-                            <td><Button
+                            {/* <td><Button
                                 color="primary"
                                 value={c.id}
-                            >Schedule</Button></td>
-                            <td><Button
+                            >Schedule</Button></td> */}
+                            {/* <td><Button
                                 color="secondary"
                                 value={c.id}
-                            >Edit</Button></td>
+                            >Edit</Button></td> */}
                         </tr>
                     ))}
                 </tbody>

@@ -143,16 +143,89 @@ app.MapGet("/api/appointments", (HillarysHairCareDbContext db) =>
         .Include(a => a.Stylist)
         .Include(a => a.Customer)
         .Include(a => a.Services)
+        .Where(a => a.isCancelled == false)
+        .Where(a => a.AppointmentTime > DateTime.Now)
         .OrderBy(a => a.AppointmentTime);
 });
 
-// add an appointment 
+// get appointment by id
+app.MapGet("api/appointments/{id}", (HillarysHairCareDbContext db, int id) =>
+{
+    return Results.Ok(db.Appointments
+        .Include(a => a.Stylist)
+        .Include(a => a.Customer)
+        .Include(a => a.Services)
+        .SingleOrDefault(a => a.Id == id)
+    );
+});
+
+// create an appointment (with services)
 app.MapPost("/api/appointments", (HillarysHairCareDbContext db, Appointment appointment) =>
 {
 
+    // var ids = appointment.Services.Select(s => s.Id).ToList();
+    // var matches = db.Services.Where((s) => ids.Contains(s.Id)).ToList();
+    // appointment.Services.Clear();
+    // appointment.Services = matches;
+    // db.Appointments.Add(appointment);
+    // db.SaveChanges();
+    // return Results.Ok();
+
+    var serviceIds = appointment.Services.Select(s => s.Id).ToList();
+    var services = db
+        .Services
+        .Where(s => serviceIds.Contains(s.Id))
+        .ToList();
+
+    appointment.Services = services;
     db.Appointments.Add(appointment);
     db.SaveChanges();
     return Results.Created($"/api/appointments/{appointment.Id}", appointment);
+
+});
+
+// edit an appointment
+app.MapPut("/api/appointments/{id}", (HillarysHairCareDbContext db, int id, Appointment app) =>
+{
+    // // create a list of all the new service ids
+    // var ids = app.Services.Select(s => s.Id).ToList();
+    // // create a list of all the new service objects
+    // var matches = db.Services.Where((s) => ids.Contains(s.Id)).ToList();
+    // // get the appointment we are updating
+    // var appointmentToUpdate = db.Appointments.Include(a => a.Services).FirstOrDefault((app) => app.Id == app.Id);
+    // // clear the current list of services
+    // appointmentToUpdate.Services.Clear();
+    // // updates with the new services
+    // appointmentToUpdate.Services = matches;
+    // // saves
+    // db.SaveChanges();
+    // // return a 204 No Content response
+    // return Results.NoContent();
+
+    // get the appointment to be updated, include the services
+    var appointment = db
+        .Appointments
+        .Include(a => a.Services)
+        .SingleOrDefault(a => a.Id == id);
+
+    //attach the services to the context
+    // db.Services.AttachRange(app.Services);
+    var serviceIds = app.Services.Select(s => s.Id).ToList();
+    var services = db
+        .Services
+        .Where(s => serviceIds.Contains(s.Id))
+        .ToList();
+
+    app.Services = services;
+
+    // add the new services
+    appointment.Services = app.Services;
+    // change any other updatable columns
+    appointment.AppointmentTime = app.AppointmentTime;
+
+    db.SaveChanges();
+
+    return Results.NoContent();
 });
 
 // cancel an appointment
