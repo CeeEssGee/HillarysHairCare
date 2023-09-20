@@ -2,13 +2,20 @@ import { useEffect, useState } from "react";
 import { Button, Spinner, Table } from "reactstrap";
 import { cancelAppointment, getAppointments } from "../../data/appointmentData";
 import AppointmentAdd from "./AppointmentAdd";
+import AppointmentEdit from "./AppointmentEdit";
+import { useNavigate } from "react-router-dom";
+import { getServices } from "../../data/serviceData";
 
 
 export default function AppointmentList() {
     const [appointments, setAppointments] = useState([]);
+    const [services, setServices] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAppointments().then(setAppointments);
+        getServices().then(setServices);
     }, []);
 
     const getAllAppointments = () => {
@@ -18,7 +25,7 @@ export default function AppointmentList() {
     const handleCancel = (e) => {
         e.preventDefault();
         cancelAppointment(e.target.value)
-        getAllAppointments()
+            .then(() => getAllAppointments())
     }
 
 
@@ -42,7 +49,7 @@ export default function AppointmentList() {
                         <th>Stylist Name</th>
                         <th>Service Details</th>
                         <th>Total Price</th>
-                        <th>Cancelled?</th>
+                        {/* <th>Cancelled?</th> */}
                         <th>Cancel?</th>
                     </tr>
                 </thead>
@@ -53,9 +60,14 @@ export default function AppointmentList() {
                             <td>{a?.appointmentTime}</td>
                             <td>{a?.customer?.name}</td>
                             <td>{a?.stylist?.name}</td>
-                            <td><Button>View/Edit Services</Button></td>
+
+                            <td><AppointmentEdit
+                                appointment={a}
+                                getAllAppointments={getAllAppointments}
+                                services={services}
+                            /> </td>
                             <td>${a?.totalCost}</td>
-                            <td>{a?.isCancelled.toString()}</td>
+                            {/* <td>{a?.isCancelled.toString()}</td> */}
 
                             {a.isCancelled ? (
                                 <td>

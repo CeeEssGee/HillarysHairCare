@@ -42,8 +42,8 @@ export default function StylistList() {
                         <th>Id</th>
                         <th>Name</th>
                         <th>Active?</th>
-                        <th>Activate</th>
                         <th>Deactivate</th>
+                        <th>Activate</th>
                     </tr>
                 </thead>
                 <tbody>
